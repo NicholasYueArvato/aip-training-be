@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="ARVATO" id="1.00.000_createTableOrgUnit">
+        <createTable tableName="org_unit">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PKOrgUnit"/>
+            </column>
+            <column name="name" type="NVARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="labels" type="JSONB">
+                <constraints nullable="true"/>
+            </column>
+            <column name="lead_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="parent_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="short_name" type="NVARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ARVATO" id="1.00.000_insertOrgUnit">
+        <insert tableName="org_unit">
+            <column name="name" value="Arvato Systems Malaysia"/>
+            <column name="labels" value = '{"type": "Site"}'/>
+            <column name="lead_id" value="0"/>
+            <column name="parent_id" value="0"/>
+            <column name="short_name" value="ASM"/>
+            <column name="is_active" value="1"/>
+        </insert>
+    </changeSet>
+    <changeSet author="ARVATO" id="1.00.000_updateOrgUnit">
+        <update tableName="org_unit">
+            <column name="labels" value = '{"type": "global_delivery_site"}'/>
+            <where>
+                name = 'Arvato Systems Malaysia'
+            </where>
+        </update>
+    </changeSet>
+
+    <changeSet author="ARVATO" id="1.00.000_org_unit_add_unique_constraints">
+        <addUniqueConstraint columnNames="short_name"
+                             constraintName="const_short_name"
+                             tableName="org_unit"/>
+    </changeSet>
+
+    <changeSet author="ARVATO" id="1.01.000_org_unit_add_unique_constraints">
+        <addUniqueConstraint columnNames="name"
+                             constraintName="const_name"
+                             tableName="org_unit"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.02.000_updateTableEmployee" author="ARVATO">
+        <addColumn tableName="employee">
+            <column name="cats_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="hr_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="activity_type" type="NVARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1.02.000_updateTableEmployee_v2" author="ARVATO">
+        <addColumn tableName="employee">
+            <column name="check_email_send" type="BOOLEAN">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="ARVATO" id="1.01.000_createTableDistributionList">
+        <createTable tableName="distribution_list">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PKDistributionList"/>
+            </column>
+            <column name="title" type="NVARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="NVARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email" type="NVARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="org_unit_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="owner_racf" type="NVARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="def_date" type="TIMESTAMPTZ">
+                <constraints nullable="false" />
+            </column>
+            <column name="def_user" type="NVARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="mod_date" type="TIMESTAMPTZ">
+                <constraints nullable="true" />
+            </column>
+            <column name="mod_user" type="NVARCHAR(100)">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

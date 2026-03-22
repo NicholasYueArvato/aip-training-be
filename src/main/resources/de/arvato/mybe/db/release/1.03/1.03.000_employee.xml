@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet author="ARVATO" id="1.00.003_insertAdmin">
+        <insert tableName="employee">
+            <column name="first_name" value="Super"/>
+            <column name="last_name" value="Admin"/>
+            <column name="email" value="bot.my@bertelsmann.de"/>
+            <column name="designation" value="Admin"/>
+            <column name="racf" value="ADM001"/>
+            <column name="cats_id" value="123"/>
+            <column name="hr_id" value="123"/>
+            <column name="activity_type" value="31440"/>
+            <column name="joining_date" value="NOW()"/>
+            <column name="supervisor_id" value="0"/>
+            <column name="org_unit_id" value="1"/>
+            <column name="def_user" value='SYSADMIN'/>
+            <column name="def_date" value="NOW()"/>
+            <column name="mod_user" value='SYSADMIN'/>
+            <column name="mod_date" value="NOW()"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

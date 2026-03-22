@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.arvato.mybe</groupId>
+    <artifactId>bep-central</artifactId>
+    <version>1.04.000-SNAPSHOT</version>
+    <description>ASM Business Enablement Platform</description>
+    <name>ASM BEP Central</name>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.5</version>
+    </parent>
+
+    <properties>
+        <bouncycastle.version>1.67</bouncycastle.version>
+        <common-codec.version>1.11</common-codec.version>
+        <common-fileupload.version>1.5</common-fileupload.version>
+        <commons-io.version>2.6</commons-io.version>
+        <csrf-token-filter.version>1.1</csrf-token-filter.version>
+        <git-commit-id-plugin.version>2.2.4</git-commit-id-plugin.version>
+        <integration-tests.skip>true</integration-tests.skip>
+        <jackson.version>2.9.10</jackson.version>
+        <jjwt.version>0.10.5</jjwt.version>
+        <json-path.version>2.4.0</json-path.version>
+        <logstash.version>6.4</logstash.version>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+        <modelmapper.version>2.1.0</modelmapper.version>
+        <org.simpleflatmapper.classifier>jdk16</org.simpleflatmapper.classifier>
+        <org.simpleflatmapper.version>8.2.3</org.simpleflatmapper.version>
+        <ow2-asm.version>6.2</ow2-asm.version>
+        <sonar.exclusions>**/Application*.*</sonar.exclusions>
+        <sonar.version>5.1</sonar.version>
+        <spring-retry.version>1.2.2.RELEASE</spring-retry.version>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <unit-tests.skip>false</unit-tests.skip>
+        <aep-spring-boot-starter-security.version>3.0.1</aep-spring-boot-starter-security.version>
+        <app.jmxPort>9001</app.jmxPort>
+        <spring-boot.image.publish>false</spring-boot.image.publish>
+        <spring-boot.image.tag>1.0.0</spring-boot.image.tag>
+        <docker-repository>aep/bep/bep-central</docker-repository>
+        <docker-registry>devnortheuropemgmtacr.azurecr.io</docker-registry>
+        <docker-registry.username>USE_GITHUB_ORG_SECRET</docker-registry.username>
+        <docker-registry.password>USE_GITHUB_ORG_SECRET</docker-registry.password>
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencies>
+         <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash.version}</version>
+        </dependency>
+
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+
+                <exclusion>
+                    <groupId>org.elasticsearch</groupId>
+                    <artifactId>elasticsearch</artifactId>
+                </exclusion>
+
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>aep.core</groupId>
+            <artifactId>aep-spring-boot-starter-security</artifactId>
+            <version>${aep-spring-boot-starter-security.version}</version>
+        </dependency>
+
+        <!-- Spring security -->
+        <!--
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.allanditzel</groupId>
+            <artifactId>spring-security-csrf-token-filter</artifactId>
+            <version>${csrf-token-filter.version}</version>
+        </dependency>
+        -->
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>${bouncycastle.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Spring JDBC Support -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+<!--            <scope>provided</scope>-->
+        </dependency>
+
+        <dependency>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <scope>runtime</scope>
+		</dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${common-fileupload.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.sonar</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>${sonar.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.elasticsearch</groupId>
+                    <artifactId>elasticsearch</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.simpleflatmapper</groupId>
+            <artifactId>sfm-jdbc-jre9</artifactId>
+            <version>${org.simpleflatmapper.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.simpleflatmapper</groupId>
+            <artifactId>sfm-springjdbc-jre9</artifactId>
+            <version>${org.simpleflatmapper.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+            <version>${spring-retry.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.elasticsearch</groupId>
+                    <artifactId>elasticsearch</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+		
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.6</version>
+        </dependency>
+
+        <!-- Start: Jenkins pipeline -->
+        <dependency>
+            <groupId>io.kokuwa.maven</groupId>
+            <artifactId>helm-maven-plugin</artifactId>
+            <version>6.3.0</version>
+        </dependency>
+        <!-- End: Jenkins pipeline -->
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
+<!--               <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>3.8.0</version>-->
+<!--                <configuration>-->
+<!--                    <source>11</source>-->
+<!--                    <target>11</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git-commit-id-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                    <execution>
+                        <id>validate-the-git-infos</id>
+                        <goals>
+                            <goal>validateRevision</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
+                    </generateGitPropertiesFilename>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+                <configuration>
+                    <jmxPort>${app.jmxPort}</jmxPort>
+                    <image>
+                        <name>${docker-registry}/${docker-repository}:${spring-boot.image.tag}</name>
+                        <publish>${spring-boot.image.publish}</publish>
+                        <env>
+                            <BPE_DELIM_JAVA_TOOL_OPTIONS xml:space="preserve"> </BPE_DELIM_JAVA_TOOL_OPTIONS>
+                            <BPE_APPEND_JAVA_TOOL_OPTIONS>-Dfile.encoding=UTF-8 -Duser.language=de -Duser.country=DE -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n</BPE_APPEND_JAVA_TOOL_OPTIONS>
+                        </env>
+                    </image>
+                    <docker>
+                        <publishRegistry>
+                            <username>${docker-registry.username}</username>
+                            <password>${docker-registry.password}</password>
+                            <url>${docker-registry}</url>
+                        </publishRegistry>
+                    </docker>
+                </configuration>
+            </plugin>
+            <!-- Start: Jenkins pipeline -->
+            <plugin>
+                <groupId>io.kokuwa.maven</groupId>
+                <artifactId>helm-maven-plugin</artifactId>
+                <version>6.3.0</version>
+                <configuration>
+                    <chartDirectory>${project.basedir}</chartDirectory>
+                    <chartVersion>${project.version}</chartVersion>
+                    <useLocalHelmBinary>true</useLocalHelmBinary>
+                    <autoDetectLocalHelmBinary>false</autoDetectLocalHelmBinary>
+                    <helmExecutableDirectory>/usr/local/bin</helmExecutableDirectory>
+                </configuration>
+            </plugin>
+            <!-- End: Jenkins pipeline -->
+        </plugins>
+    </build>
+
+</project>

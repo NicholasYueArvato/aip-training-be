@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+      table,tr,th,td {
+         text-align: left;
+      }
+    </style>
+    <title>${Title}</title>
+</head>
+<body>
+    <div style="margin-top: 10px">Hi,</div>
+    <br/>
+    <div>Following employees are created recently.</div>
+    <br/>
+    <div>
+        <table role="presentation" border="1" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+            <tr>
+                <th>No.</th>
+                <th>Employee Name</th>
+                <th>Employee RACF</th>
+                <th>Employee Email</th>
+                <th>Joining Date</th>
+                <th>Superior Name</th>
+            </tr>
+            ${EmployeeData}
+        </table>
+    </div>
+    <br/>
+    <div>Best Regards,</div>
+    <div>BEP Bot</div>
+</body>
+</html>

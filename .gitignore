@@ -1,0 +1,11 @@
+/target
+.classpath
+.project
+/.settings/
+*.iml
+/.idea/
+/bin/
+/src/main/webapp/
+/log
+*.tgz
+*.tgz

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="ARVATO" id="1.02.000_holiday">
+        <createTable tableName="holiday">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="PKHoliday"/>
+            </column>
+            <column name="date" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="description" type="NVARCHAR(500)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="name" type="NVARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.02.000_addHolidayDateYearIndex" author="ARVATO">
+        <createIndex tableName="holiday" indexName="idx_holiday_date_year">
+            <column name="DATE_PART('year', date)" />
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

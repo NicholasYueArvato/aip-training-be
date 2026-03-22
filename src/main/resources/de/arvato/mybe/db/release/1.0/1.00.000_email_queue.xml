@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+<changeSet author="ARVATO" id="1.00.000_createTableEmailQueue">
+        <createTable tableName="email_queue">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="PKEmailQueue"/>
+            </column>
+            <column name="to" type="NVARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="from" type="NVARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contents" type="NVARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="NVARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="NVARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="def_user" type="NVARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="def_date" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mod_user" type="NVARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="mod_date" type="DATETIME2">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="renameColumnToAndFrom" author="ARVATO">
+        <renameColumn tableName="email_queue" oldColumnName="to" newColumnName="recipient"/>
+        <renameColumn tableName="email_queue" oldColumnName="from" newColumnName="sender"/>
+    </changeSet>
+    <changeSet id="1.02.000_updateEmailQueueTable" author="ARVATO">
+        <addColumn tableName="email_queue">
+            <column name="subject" type="NVARCHAR(20)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1.03.000_updateEmailQueueTableSubjectDataType" author="ARVATO">
+        <modifyDataType tableName="email_queue" columnName="subject" newDataType="NVARCHAR(200)"/>
+    </changeSet>
+</databaseChangeLog>

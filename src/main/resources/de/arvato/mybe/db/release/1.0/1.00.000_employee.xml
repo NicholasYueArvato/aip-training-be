@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="ARVATO" id="1.00.000_createTableEmployee">
+        <createTable tableName="employee">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="PKEmployee"/>
+            </column>
+            <column name="first_name" type="NVARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="NVARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_name" type="NVARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email" type="NVARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="designation" type="NVARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="racf" type="NVARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="joining_date" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_date" type="DATETIME2">
+                <constraints nullable="true"/>
+            </column>
+            <column name="org_unit_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="job_grade" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="def_date" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="def_user" type="NVARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="mod_date" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mod_user" type="NVARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.00.000_updateTableEmployee" author="ARVATO">
+        <addColumn tableName="employee">
+            <column name="supervisor_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <dropColumn tableName="employee">
+            <column name="org_unit_id"/>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="1.01.000_updateTableEmployee" author="ARVATO">
+        <addColumn tableName="employee">
+            <column name="org_unit_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="1.00.000_addSuperVisorIndex" author="ARVATO">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="idx_employee_supervisorId"></indexExists>
+            </not>
+        </preConditions>
+        <createIndex indexName="idx_employee_supervisorId" tableName="employee">
+            <column name="supervisor_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="1.01.000_addEmployeeRacfIndex" author="ARVATO">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="idx_employee_racf"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="employee" indexName="idx_employee_racf">
+            <column name="racf"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

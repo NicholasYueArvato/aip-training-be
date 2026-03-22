@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="ARVATO" id="1.00.000_createTableUserRole">
+        <createTable tableName="user_role">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PKUserRole"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint 
+        	columnNames="user_id, role_id"
+        	constraintName="UQ_USER_ROLE"
+        	tableName="user_role"
+        />
+    </changeSet>
+</databaseChangeLog>

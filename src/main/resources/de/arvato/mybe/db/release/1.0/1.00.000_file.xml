@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="ARVATO" id="1.00.000_createImportedFile">
+        <createTable tableName="import_file">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PKImportedFile"/>
+            </column>
+            <column name="name" type="NVARCHAR(120)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="NVARCHAR(120)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="NVARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="blob_id" type="VARCHAR(50)">
+                <constraints nullable="true" />
+            </column>
+            <column name="def_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="def_user" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mod_time" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+            <column name="mod_user" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ARVATO" id="1.00.000_insertImportedFileData">
+        <sql endDelimiter="GO">INSERT INTO "public"."import_file"(name, description, status, "blob_id", "def_time", "def_user")
+            VALUES
+                ('Exported001.csv'
+                    , 'First uploaded'
+                    , 'UPLOADED'
+                    , '12331238090'
+                    ,  NOW()
+                    , 'USER001')
+            GO</sql>
+    </changeSet>
+</databaseChangeLog>
